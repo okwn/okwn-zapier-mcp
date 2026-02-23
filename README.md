@@ -1,80 +1,20 @@
-# Zapier MCP
+# Zapier MCP Plugins
 
-**Connect your AI to thousands of apps with the Model Context Protocol**
+Official Zapier plugins for AI workflows. Each plugin is a standalone directory under `plugins/` with its own manifest.
 
-Transform your AI assistant from a conversational tool into a functional extension of your applications. [Zapier MCP](https://zapier.com/mcp) is a **remote** MCP server that gives your AI direct access to 8,000+ apps and 30,000+ actions—no complex API integrations required.
+[Zapier MCP](https://zapier.com/mcp) is a remote MCP server that gives your AI direct access to 8,000+ apps and 30,000+ actions — no complex API integrations required. Just describe what you want done in natural language.
 
-https://github.com/user-attachments/assets/8304058f-67da-40b9-bc4f-5095b2817d61
+## Plugins
 
-## 🚀 What is Zapier MCP?
+| Plugin                    | Category     | Description                                                                                                     |
+| :------------------------ | :----------- | :-------------------------------------------------------------------------------------------------------------- |
+| [Zapier](plugins/zapier/) | Productivity | Connect 8,000+ apps to your AI workflow. Discover, enable, and execute Zapier actions directly from your client |
 
-[Zapier MCP](https://zapier.com/mcp) is a standardized way to connect AI assistants to thousands of apps and services. It enables your AI to take real actions like:
+## Getting Started
 
-- 💬 Send Slack messages and create channels
-- 📊 Add rows to Google Sheets and create spreadsheets  
-- 📧 Send Gmail emails and manage labels
-- ✅ Create Asana tasks and update projects
-- 🐙 Create GitHub issues and manage PRs
-- 📈 Update HubSpot deals and manage contacts
+- **[Zapier MCP](https://zapier.com/mcp)** — Quick setup guides and overview
+- **[Developer Documentation](https://docs.zapier.com/mcp/home)** — API references and integration guides
 
-All through natural language commands—just describe what you want done.
+## Support
 
-## ⚡ Key Features
-
-- **8,000+ App Connections** - Access Zapier's massive library of pre-built integrations
-- **30,000+ Actions** - Enable specific tasks and searches across apps
-- **Natural Language** - No complex commands needed
-- **Secure by Default** - Authentication, encryption, and rate limiting handled by Zapier
-- **Multiple Client Support** - Works with Claude, Cursor, Windsurf, and more
-
-## 📚 Getting Started
-
-### 🌟 **For Everyone**
-Quick setup guides and user-friendly overview:
-
-**[🏠 Zapier MCP →](https://zapier.com/mcp)**
-**[🤖 Claude Skills →](/skills/)**
-
-### 👨‍💻 **For Developers**
-Get technical documentation, API references, and integration guides:
-
-**[📖 Developer Documentation →](https://docs.zapier.com/mcp/home)**
-**[🤖 Claude Skills →](/skills/)**
-
-## 🏗️ Repository Structure & Development
-
-This repository is not explicitly our Zapier MCP server, but rather all accompanying docs associated with it and organized to maximize reusability and maintainability:
-
-```
-zapier-mcp/
-├── skills/              # Source of truth for all skills
-├── commands/            # Source of truth for all commands  
-├── plugins/             # Plugin distributions (built from skills/commands)
-├── Makefile             # Build system
-└── BUILD.md             # Build system documentation
-```
-
-### Quick Start for Developers
-
-```bash
-# Initial setup
-./scripts/setup.sh
-
-# Build all plugins
-make build-all
-
-# Build a specific plugin
-make build PLUGIN=zapier-eng-plugin
-```
-
-**Documentation:**
-- **[QUICKSTART.md](/QUICKSTART.md)** - Get started in 5 minutes
-- **[BUILD.md](/BUILD.md)** - Complete build system documentation
-- **[CONTRIBUTING.md](/CONTRIBUTING.md)** - Development guidelines
-
-## 🛟 Support
-If you need assistance with Zapier MCP, please reach out here:
-
-**[🆘 Zapier MCP Support →](https://mcp.zapier.app/home)**
-
-*Zapier MCP is part of the [Model Context Protocol](https://modelcontextprotocol.io/) ecosystem*
+If you need assistance with Zapier MCP, reach out here: **[Zapier MCP Support](https://mcp.zapier.app/home)**
