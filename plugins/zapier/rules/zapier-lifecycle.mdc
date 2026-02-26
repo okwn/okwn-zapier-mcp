@@ -9,7 +9,7 @@ This workspace uses Zapier MCP to connect your AI to external apps. These rules 
 
 ## How tools work
 
-Zapier MCP exposes each configured action as its own tool. Tool names follow the pattern `app__action_name` (e.g., `gmail__send_email`, `slack__find_message`, `jira__find_issue_by_key`).
+Zapier MCP exposes each configured action as its own tool. Tool names follow the pattern `app_action_name` (e.g., `gmail_send_email`, `slack_find_message`, `jira_find_issue_by_key`). The tool description identifies the associated app.
 
 There is one built-in tool:
 
@@ -21,7 +21,7 @@ All other tools are action-specific — call them directly to execute the action
 
 ## Using tools
 
-1. **Call action tools directly.** Each tool IS the action. No intermediate steps needed — just call `slack__send_channel_message` to send a Slack message.
+1. **Call action tools directly.** Each tool IS the action. No intermediate steps needed — just call `slack_send_channel_message` to send a Slack message.
 2. **Auth may be needed.** If a tool call returns an auth error, the user needs to authenticate that app at mcp.zapier.com.
 3. **To add or remove actions**, call `get_configuration_url` and direct the user there. Actions are managed through the web UI, not through MCP tools.
 

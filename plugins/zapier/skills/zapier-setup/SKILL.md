@@ -13,7 +13,7 @@ Try calling `get_configuration_url` or any Zapier tool. The result determines wh
 
 | Result                                                        | Branch             |
 | ------------------------------------------------------------- | ------------------ |
-| Zapier action tools are available (e.g., `gmail__send_email`) | **Healthy**        |
+| Zapier action tools are available (e.g., `gmail_send_email`)  | **Healthy**        |
 | Only `get_configuration_url` is available (no action tools)   | **Fresh install**  |
 | Fails with auth/401 error                                     | **Auth broken**    |
 | No Zapier tools available at all                              | **Server missing** |
@@ -22,14 +22,14 @@ Try calling `get_configuration_url` or any Zapier tool. The result determines wh
 
 The server is connected and has action tools configured. Show a summary and offer next steps.
 
-1. Look at the available Zapier MCP tools. Each action tool follows the naming pattern `app__action_name` (e.g., `slack__send_channel_message`, `gmail__find_email`). Extract the app name from the prefix before `__`.
+1. Look at the available Zapier MCP tools. Each action tool follows the naming pattern `app_action_name` (e.g., `slack_send_channel_message`, `gmail_find_email`). Identify the app from the tool description (e.g., "Send a **Slack** channel message" → Slack).
 2. Group tools by app and show a clean summary:
 
 "Your Zapier MCP is connected with [N] tools across [app list]:
 
-- **Slack**: send_channel_message, find_message, get_message
-- **Gmail**: find_email, send_email
-- **Google Calendar**: find_events, create_event
+- **Slack**: `slack_send_channel_message`, `slack_find_message`, `slack_get_message`
+- **Gmail**: `gmail_find_email`, `gmail_send_email`
+- **Google Calendar**: `google_calendar_find_events`, `google_calendar_create_event`
 
 Everything's working. What would you like to do?"
 
@@ -64,9 +64,9 @@ The server is connected but has no action tools. The user needs to add actions t
 
 Don't ask "what apps do you use?" Start with what they're trying to accomplish.
 
-"You're connected but don't have any tools set up yet. Let's add some.
+"You're connected but don't have any tools set up yet. Let's add some."
 
-**[Click here to configure your tools](https://mcp.zapier.com)**"
+Call `get_configuration_url` and share the returned URL so the user can go directly to their server's tool config page.
 
 Then help them pick what to add based on their workflow:
 

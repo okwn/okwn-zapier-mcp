@@ -7,7 +7,7 @@ description: Check the health of your Zapier MCP setup. Three modes — health c
 
 Three modes for monitoring and maintaining a Zapier MCP setup. Determine the mode from context, or ask if unclear.
 
-In v1, each configured action is its own MCP tool (e.g., `slack__send_channel_message`, `gmail__find_email`). The tool name prefix before `__` identifies the app. Inspect the available Zapier MCP tools to understand what's configured.
+Each configured action is its own MCP tool (e.g., `slack_send_channel_message`, `gmail_find_email`). The tool description identifies the associated app. Inspect the available Zapier MCP tools to understand what's configured.
 
 ## Mode 1: Health check
 
@@ -17,11 +17,11 @@ A quick dashboard view of the current state.
 
 ### Steps
 
-1. Check the available Zapier MCP tools. Each action tool follows the pattern `app__action_name`. The built-in `get_configuration_url` tool is always present when the server is connected.
+1. Check the available Zapier MCP tools. Each action tool follows the pattern `app_action_name`. The built-in `get_configuration_url` tool is always present when the server is connected.
 
 2. If no Zapier tools are available: report the connection status and suggest running **zapier-setup**.
 
-3. If tools are available, build a summary by grouping action tools by app (the prefix before `__`):
+3. If tools are available, build a summary by grouping action tools by app (identified from each tool's description):
 
 **For each app**, show:
 
@@ -60,7 +60,7 @@ Find inefficiencies: duplicate actions, unused tools, conflicts with native MCP 
 1. Inspect the available Zapier MCP action tools to get the full inventory.
 
 2. **Check for duplicates within Zapier MCP:**
-   - Multiple actions for the same app that do similar things (e.g., both `slack__find_message` and `slack__search_messages`)
+   - Multiple actions for the same app that do similar things (e.g., both `slack_find_message` and `slack_search_messages`)
    - Recommend removing the less useful one
 
 3. **Check for conflicts with native MCP servers:**

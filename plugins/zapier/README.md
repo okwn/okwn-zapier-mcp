@@ -22,12 +22,12 @@ After installing, open a chat and say **"setup zapier"**. The onboarding skill w
 
 ## How Tools Work
 
-The plugin connects to Zapier's MCP server. Each action you configure at [mcp.zapier.com](https://mcp.zapier.com) becomes its own MCP tool, named with the pattern `app__action_name`:
+The plugin connects to Zapier's MCP server. Each action you configure at [mcp.zapier.com](https://mcp.zapier.com) becomes its own MCP tool, named with the pattern `app_action_name`:
 
-- **`gmail__send_email`** — Send an email via Gmail
-- **`slack__find_message`** — Search for a Slack message
-- **`jira__create_issue`** — Create a Jira issue
-- **`google_calendar__find_events`** — Look up calendar events
+- **`gmail_send_email`** — Send an email via Gmail
+- **`slack_find_message`** — Search for a Slack message
+- **`jira_create_issue`** — Create a Jira issue
+- **`google_calendar_find_events`** — Look up calendar events
 
 There is also one built-in tool:
 

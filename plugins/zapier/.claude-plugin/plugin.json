@@ -20,5 +20,7 @@
     "no-code",
     "ai-tools",
     "productivity"
-  ]
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
 }

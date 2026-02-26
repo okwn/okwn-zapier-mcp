@@ -11,18 +11,18 @@ This is the "post-onboarding" step: the user has already added tools via the set
 
 ## Step 1: Inventory enabled tools
 
-Inspect the available Zapier MCP tools. In v1, each configured action is its own tool with a name following the pattern `app__action_name` (e.g., `slack__send_channel_message`, `gmail__find_email`). The built-in `get_configuration_url` tool should be excluded from the profile.
+Inspect the available Zapier MCP tools. Each configured action is its own tool with a name following the pattern `app_action_name` (e.g., `slack_send_channel_message`, `gmail_find_email`). The built-in `get_configuration_url` tool should be excluded from the profile.
 
 Parse the available tools into a structured list:
 
-- **App name**: the prefix before `__` (e.g., `slack`, `gmail`, `jira`), converted to title case for display
-- **Action name**: the suffix after `__`, converted to human-readable form (replace underscores with spaces, title case)
+- **App name**: derived from the tool description (e.g., "Get info about a **Slack** conversation" → Slack). The tool name also starts with the app prefix (e.g., `slack_`, `gmail_`, `jira_`), but use the description as the authoritative source since multi-word app names like `google_calendar` are ambiguous to parse from the tool name alone.
+- **Action name**: the part of the tool name after the app prefix, converted to human-readable form (replace underscores with spaces, title case)
 - **Tool name**: the full tool name as-is (used for the technical identifier in the profile)
 - **Read vs write**: infer from the action name — find/search/get/list/lookup = read, send/create/update/add/delete = write
 
 ## Step 2: Group and analyze
 
-Group actions by app. For each app, identify:
+Group actions by app (using the app name from each tool's description). For each app, identify:
 
 - **Read/search actions**: things the AI can look up (find emails, get documents, search issues)
 - **Write actions**: things the AI can do (send messages, create issues, update records)
