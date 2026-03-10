@@ -1,6 +1,6 @@
 ---
 name: zapier-setup
-description: Set up Zapier MCP and add tools to your AI assistant. Runs a diagnostic, then branches into the right flow: summary for healthy setups, reconnect for broken auth, onboarding for fresh installs, or config help when the server is missing. Use when getting started, troubleshooting connection issues, or adding new tools.
+description: Set up Zapier MCP and add tools to your AI assistant. Runs a diagnostic, then branches into the right flow: summary for healthy setups, reconnect for broken auth, onboarding for fresh installs, or config help when the server is missing. Use when getting started, troubleshooting connection issues, adding new tools, or when the user asks "what can I do now" or "what can I do with Zapier".
 ---
 
 # Zapier setup
@@ -11,12 +11,12 @@ Check whether any Zapier MCP tools are available, then branch based on what come
 
 Try calling `get_configuration_url` or any Zapier tool. The result determines which branch to follow:
 
-| Result                                                        | Branch             |
-| ------------------------------------------------------------- | ------------------ |
-| Zapier action tools are available (e.g., `gmail_send_email`)  | **Healthy**        |
-| Only `get_configuration_url` is available (no action tools)   | **Fresh install**  |
-| Fails with auth/401 error                                     | **Auth broken**    |
-| No Zapier tools available at all                              | **Server missing** |
+| Result                                                        | Branch            |
+| ------------------------------------------------------------- | ----------------- |
+| Zapier action tools are available (e.g., `gmail_send_email`)  | **Healthy**       |
+| Only `get_configuration_url` is available (no action tools)   | **Fresh install** |
+| Fails with auth/401 error                                     | **Auth broken**   |
+| No Zapier tools available at all (server errored / 0 tools)   | **Auth broken**   |
 
 ## Branch: Healthy
 
@@ -41,7 +41,7 @@ Everything's working. What would you like to do?"
 
 ## Branch: Auth broken
 
-The server exists in the config but authentication has expired or is invalid.
+The server exists in the config but authentication has expired or is invalid. This also covers the case where zero Zapier tools are available (the server is errored) — that's almost always an auth problem.
 
 1. Tell the user:
 
@@ -123,42 +123,6 @@ Once everything is connected:
 "Want me to create a tools profile? It teaches your AI exactly when and how to use each of these tools in future conversations."
 
 If yes, follow the **create-my-tools-profile** skill.
-
-## Branch: Server missing
-
-The Zapier MCP tools aren't available at all. The server isn't configured.
-
-1. Tell the user:
-
-"Zapier MCP isn't set up yet. Let's fix that.
-
-**[Click here to create your Zapier MCP server](https://mcp.zapier.com)**
-
-Create a server, select your AI client, and either:
-
-- If the connection flows back automatically, just say **done**
-- If you get a connection URL, paste it here"
-
-2. If they paste a URL:
-   - Extract the token (handle all URL formats)
-   - Build the v1 URL: `https://mcp.zapier.com/api/v1/connect?token={TOKEN}`
-   - Write to the appropriate MCP config file (see "MCP config by client" below):
-
-   ```json
-   {
-     "mcpServers": {
-       "zapier": {
-         "url": "https://mcp.zapier.com/api/v1/connect?token={TOKEN}",
-         "headers": {}
-       }
-     }
-   }
-   ```
-
-   Preserve any existing MCP servers in the file.
-   - Tell them to reload their client (see "Reload instructions by client" below).
-
-3. After reload or auto-connect, re-run the diagnostic. Route to the appropriate branch (likely Fresh Install).
 
 ## MCP config by client
 

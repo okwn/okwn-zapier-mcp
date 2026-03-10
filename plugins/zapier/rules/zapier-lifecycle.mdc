@@ -56,7 +56,7 @@ Users may have both Zapier MCP actions AND native MCP servers for the same app (
 
 When an error occurs, explain it in plain language. Don't dump raw error messages. "Your Slack connection needs to be re-authenticated" beats "Error 401: OAuth token invalid for SlackCLIAPI."
 
-## Setup and maintenance
+## Setup, maintenance, and troubleshooting
 
 - If tools aren't working or the user wants to add apps, trigger the **zapier-setup** skill.
 - For health checks, audits, or troubleshooting, trigger the **zapier-status** skill.
