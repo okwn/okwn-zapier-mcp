@@ -2,7 +2,7 @@
 
 **Connect your AI to thousands of apps with the Model Context Protocol**
 
-Transform your AI assistant from a conversational tool into a functional extension of your applications. [Zapier MCP](https://zapier.com/mcp) is a **remote** MCP server that gives your AI direct access to 8,000+ apps and 40,000+ actions—no complex API integrations required.
+Transform your AI assistant from a conversational tool into a functional extension of your applications. [Zapier MCP](https://zapier.com/mcp) is a **remote** MCP server that gives your AI direct access to 9,000+ apps and 40,000+ actions—no complex API integrations required.
 
 https://github.com/user-attachments/assets/8304058f-67da-40b9-bc4f-5095b2817d61
 
@@ -54,7 +54,32 @@ Visit [mcp.zapier.com](https://mcp.zapier.com) to browse and enable specific act
 
 ## Built-in Tools
 
-Every Zapier MCP server comes with a set of meta-tools available immediately—before you configure any actions. These let your AI discover and understand what's possible:
+Zapier MCP servers operate in one of two modes. Your server's mode determines which built-in tools are available.
+
+### Agentic (Beta)
+
+The Agentic configuration is currently in Beta and being rolled out to all users. Agentic servers provide 14 static meta-tools for managing and executing actions entirely within the chat experience:
+
+| Tool | Category | Description |
+|------|----------|-------------|
+| `list_enabled_zapier_actions` | Action Management | See all your currently enabled actions |
+| `discover_zapier_actions` | Action Management | Search for apps and actions available to add |
+| `enable_zapier_action` | Action Management | Enable a specific action as a tool |
+| `disable_zapier_action` | Action Management | Disable an action you no longer need |
+| `auto_provision_mcp` | Action Management | Auto-setup tools from your existing Zapier connections |
+| `execute_zapier_read_action` | Execution | Run a read/search action (e.g., find an email, look up a contact) |
+| `execute_zapier_write_action` | Execution | Run a write action (e.g., send a message, create a task) |
+| `get_configuration_url` | Configuration | Get the URL to your Zapier MCP config page |
+| `list_zapier_skills` | Skills | List saved Zapier skills/workflows |
+| `get_zapier_skill` | Skills | Retrieve a specific skill |
+| `create_zapier_skill` | Skills | Create a new skill |
+| `update_zapier_skill` | Skills | Update an existing skill |
+| `delete_zapier_skill` | Skills | Delete a skill |
+| `send_feedback` | Feedback | Send feedback to Zapier |
+
+### Classic
+
+Classic servers expose one built-in tool alongside your configured action tools:
 
 | Tool | Description |
 |------|-------------|
@@ -63,6 +88,12 @@ Every Zapier MCP server comes with a set of meta-tools available immediately—b
 ---
 
 ## How Actions Work
+
+### Agentic (Beta)
+
+Actions are managed and executed directly in chat. Use `discover_zapier_actions` to find available apps, `enable_zapier_action` to add one, and `execute_zapier_read_action` / `execute_zapier_write_action` to run it. Your AI can also call `list_enabled_zapier_actions` at any time to see what's currently available.
+
+### Classic
 
 When you add an action at [mcp.zapier.com](https://mcp.zapier.com), it gets exposed as a dedicated tool on your MCP server. Your AI can then call it directly.
 
@@ -78,7 +109,7 @@ This repo also hosts official Zapier plugins for AI workflows. Each plugin is a 
 
 | Plugin | Category | Description |
 |--------|----------|-------------|
-| [Zapier](plugins/zapier/) | Productivity | Connect 8,000+ apps to your AI workflow. Discover, enable, and execute Zapier actions directly from your client. Includes onboarding skills, status tools, and safety rules. |
+| [Zapier](plugins/zapier/) | Productivity | Connect 9,000+ apps to your AI workflow. Discover, enable, and execute Zapier actions directly from your client. Includes onboarding skills, status tools, and safety rules. |
 
 ---
 

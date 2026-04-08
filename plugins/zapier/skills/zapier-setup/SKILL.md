@@ -1,13 +1,49 @@
 ---
 name: zapier-setup
-description: Set up Zapier MCP and add tools to your AI assistant. Runs a diagnostic, then branches into the right flow: summary for healthy setups, reconnect for broken auth, onboarding for fresh installs, or config help when the server is missing. Use when getting started, troubleshooting connection issues, adding new tools, or when the user asks "what can I do now" or "what can I do with Zapier".
+description: Set up Zapier MCP and add tools to your AI assistant. Introduces what Zapier can do, walks through authentication, detects your server mode, then branches into the right flow — summary for healthy setups, reconnect for broken auth, onboarding for fresh installs, or config help when the server is missing. Use when getting started, troubleshooting connection issues, adding new tools, or when the user asks "what can I do now", "what can I do with Zapier", "show me how the Zapier plugin works", "what is Zapier MCP", "how does Zapier work", or "tell me about Zapier".
 ---
 
 # Zapier setup
 
-Check whether any Zapier MCP tools are available, then branch based on what comes back.
+Introduce Zapier MCP, get the user authenticated, detect their server mode, then guide them through the appropriate setup flow.
 
-## Step 1: Diagnose
+## Step 1: Introduction
+
+Start by describing what Zapier MCP can do for the user, then get them authenticated.
+
+### Pitch
+
+"Zapier MCP connects your AI assistant to 9,000+ apps — Slack, Gmail, Google Calendar, Jira, Notion, HubSpot, and thousands more. Once set up, you can search across your tools, take actions, and automate workflows, all through natural conversation. It's personalized to your workflow — you pick the apps and actions that matter to you, and your AI learns to use them."
+
+### Check connection
+
+Check if any Zapier MCP tools are available:
+
+- **Tools are available** (either Agentic meta-tools or Classic action tools): The user is already authenticated. Give a shorter version of the pitch — "You've got Zapier MCP installed and connected. Let me check what you have set up." — then proceed to Step 2.
+
+- **No Zapier tools available at all**: The server is installed but needs authentication. First, attempt to authenticate directly in the chat by calling `mcp_auth` on the Zapier MCP server. If that succeeds, re-check available tools and proceed to Step 2.
+
+  If `mcp_auth` fails or is unavailable, fall back to manual instructions based on their client:
+
+  - **In Cursor:** "Let's get you connected. Go to **Settings > Cursor Settings > Tools & MCP** and click **Connect** next to the Zapier MCP server. You can also press **Cmd+Shift+P** and search for 'MCP' to get there quickly."
+  - **In Claude Desktop:** "Let's get you connected. Go to **Customize > Connectors > Zapier** and click **Connect**."
+  - **In other clients:** "Let's get you connected. Find the Zapier MCP server in your client's MCP settings and click Connect. This will redirect you to mcp.zapier.com to sign in."
+
+  Detect which client is in use from the environment or conversation context. If unclear, give the generic instructions.
+
+  Wait for the user to confirm ("done"), then re-check available tools and proceed to Step 2.
+
+## Step 2: Detect mode
+
+Check which tools are available to determine the server mode:
+
+- **Agentic mode**: `list_enabled_zapier_actions` is available as a tool. Call `get_zapier_skill` with name `"zapier-mcp-onboarding"` on the Zapier MCP server and follow its instructions. If authentication is needed, help the user through it, then retry the call. **Do not continue with the steps below** — the Zapier-hosted onboarding skill handles the entire Agentic setup flow.
+
+- **Classic mode**: `get_configuration_url` and/or individual `app_action_name` tools are present, but `list_enabled_zapier_actions` is not. Continue to Step 3.
+
+## Step 3: Diagnose
+
+This step applies only to **Classic mode**.
 
 Try calling `get_configuration_url` or any Zapier tool. The result determines which branch to follow:
 
@@ -62,15 +98,15 @@ The Zapier MCP server is installed via the plugin but hasn't been authenticated 
 
 1. Tell the user the Zapier plugin is installed but needs to be connected first.
 
-2. Guide them based on their client:
+2. Attempt to authenticate directly in the chat by calling `mcp_auth` on the Zapier MCP server. If that succeeds, skip to step 5.
+
+3. If `mcp_auth` fails or is unavailable, fall back to manual instructions based on their client:
 
    - **In Cursor:** "Go to **Settings > Cursor Settings > Tools & MCP** and click **Connect** next to the Zapier MCP server. You can also press **Cmd+Shift+P** and search for 'MCP' to get there quickly."
    - **In Claude Desktop:** "Go to **Customize > Connectors > Zapier** and click **Connect**."
    - **In other clients:** "Find the Zapier MCP server in your client's MCP settings and connect it. This will redirect you to mcp.zapier.com to sign in."
 
    Detect which client is in use from the environment or conversation context. If unclear, give the generic instructions.
-
-3. Explain that connecting will open the Zapier sign-in flow at mcp.zapier.com where they'll authenticate their account.
 
 4. Wait for the user to confirm ("done").
 

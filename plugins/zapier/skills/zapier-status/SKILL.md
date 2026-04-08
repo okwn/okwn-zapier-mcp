@@ -7,7 +7,7 @@ description: Check the health of your Zapier MCP setup. Three modes — health c
 
 Three modes for monitoring and maintaining a Zapier MCP setup. Determine the mode from context, or ask if unclear.
 
-Each configured action is its own MCP tool (e.g., `slack_send_channel_message`, `gmail_find_email`). The tool description identifies the associated app. Inspect the available Zapier MCP tools to understand what's configured.
+**First, detect the server mode:** If `list_enabled_zapier_actions` is available, the user is on **Agentic mode**. Otherwise, the user is on **Classic mode** where each configured action is its own MCP tool (e.g., `slack_send_channel_message`, `gmail_find_email`).
 
 ## Mode 1: Health check
 
@@ -17,11 +17,13 @@ A quick dashboard view of the current state.
 
 ### Steps
 
-1. Check the available Zapier MCP tools. Each action tool follows the pattern `app_action_name`. The built-in `get_configuration_url` tool is always present when the server is connected.
+1. Check the available tools:
+   - **Agentic mode:** Call `list_enabled_zapier_actions` to get the inventory of enabled actions.
+   - **Classic mode:** Inspect the available Zapier MCP tools. Each action tool follows the pattern `app_action_name`. The built-in `get_configuration_url` tool is always present when the server is connected.
 
-2. If no Zapier tools are available: report the connection status and suggest running **zapier-setup**.
+2. If no Zapier tools are available: report the connection status and suggest running **zapier-setup** (Classic) or calling `get_zapier_skill` with name `"zapier-mcp-onboarding"` (Agentic).
 
-3. If tools are available, build a summary by grouping action tools by app (identified from each tool's description):
+3. If tools/actions are available, build a summary by grouping actions by app (Agentic: from the `list_enabled_zapier_actions` response; Classic: from each tool's description):
 
 **For each app**, show:
 
@@ -57,7 +59,9 @@ Find inefficiencies: duplicate actions, unused tools, conflicts with native MCP 
 
 ### Steps
 
-1. Inspect the available Zapier MCP action tools to get the full inventory.
+1. Get the full inventory:
+   - **Agentic mode:** Call `list_enabled_zapier_actions`.
+   - **Classic mode:** Inspect the available Zapier MCP action tools.
 
 2. **Check for duplicates within Zapier MCP:**
    - Multiple actions for the same app that do similar things (e.g., both `slack_find_message` and `slack_search_messages`)
@@ -91,7 +95,9 @@ Recommended removals: 4 actions
 Want me to show you how to clean these up?
 ```
 
-6. If the user says yes, call `get_configuration_url` and direct them to the web UI to remove the recommended actions. List exactly which ones to remove.
+6. If the user says yes:
+   - **Agentic mode:** Use `disable_zapier_action` to remove the recommended actions directly in chat.
+   - **Classic mode:** Call `get_configuration_url` and direct them to the web UI to remove the recommended actions. List exactly which ones to remove.
 
 ## Mode 3: Diagnose
 
@@ -107,9 +113,11 @@ Systematic troubleshooting with error pattern matching.
 
    a. **Connection check:** Try calling `get_configuration_url` or any available Zapier tool. If nothing works, the problem is server-level (auth, config, network).
 
-   b. **Action check:** Is the specific action tool available? If not, the user needs to add it through the web UI.
+   b. **Action check:**
+      - **Agentic mode:** Call `list_enabled_zapier_actions` to see if the action is enabled. If not, use `discover_zapier_actions` to find it and `enable_zapier_action` to add it.
+      - **Classic mode:** Is the specific action tool available? If not, the user needs to add it through the web UI.
 
-   c. **Auth check:** Try calling a read action tool for the affected app. If it returns an auth error, the app connection needs re-authentication.
+   c. **Auth check:** Try calling a read action for the affected app (Agentic: `execute_zapier_read_action`; Classic: the specific read tool). If it returns an auth error, the app connection needs re-authentication.
 
    d. **Parameter check:** Review the failing call's parameters. Common issues:
    - Missing required fields
@@ -122,7 +130,7 @@ Systematic troubleshooting with error pattern matching.
 | ------------------------------------------ | ----------------------------------- | ------------------------------------------------------------- |
 | All tools fail                             | Server auth expired                 | Re-authenticate at mcp.zapier.com                             |
 | One app fails, others work                 | App-level auth expired              | Re-connect that specific app                                  |
-| Tool not found / unavailable               | Action not configured               | Direct user to `get_configuration_url` to add it              |
+| Tool not found / unavailable               | Action not configured               | Agentic: `discover_zapier_actions` + `enable_zapier_action`. Classic: direct user to `get_configuration_url` to add it |
 | "invalid params"                           | Wrong fields or format              | Check the tool's parameter schema                             |
 | Results are empty but expected data exists | Search too narrow or wrong field    | Broaden the search or check field names                       |
 | Timeout on execute                         | Server overloaded or action is slow | Retry once, then report if persistent                         |
@@ -142,6 +150,6 @@ Systematic troubleshooting with error pattern matching.
 
 ## General notes
 
-- Always check available Zapier MCP tools as the first diagnostic step in any mode.
+- Always check available Zapier MCP tools as the first diagnostic step in any mode. On Agentic, this means calling `list_enabled_zapier_actions`. On Classic, this means inspecting the available tool names.
 - Don't dump raw error messages. Translate them into plain language.
 - If a problem is beyond what the skill can diagnose (server-side bug, API outage), say so and suggest checking [status.zapier.com](https://status.zapier.com) or contacting support.
