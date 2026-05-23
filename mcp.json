@@ -1,1 +1,7 @@
-/Users/brody/git/zapier/zapier-mcp/plugins/zapier/.mcp.json
+{
+  "mcpServers": {
+    "zapier": {
+      "url": "https://mcp.zapier.com/api/v1/connect"
+    }
+  }
+}
