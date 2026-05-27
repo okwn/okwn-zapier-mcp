@@ -129,7 +129,7 @@ You have access to the following apps and actions through Zapier MCP. Use them p
 
 ## Preferences
 
-- Always try Zapier MCP tools before suggesting the user do something manually
+- Always try Zapier MCP tools before suggesting the user do something mannually
 - For read operations, just do it — don't ask permission to look something up
 - For write operations (sending messages, creating issues, updating records), confirm with the user before executing
 - If a tool call fails, explain what happened and suggest an alternative
