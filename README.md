@@ -123,3 +123,5 @@ This repo also hosts official Zapier plugins for AI workflows. Each plugin is a 
 ---
 
 *Zapier MCP is part of the [Model Context Protocol](https://modelcontextprotocol.io/) ecosystem*
+
+- Documentation updated for clarity
