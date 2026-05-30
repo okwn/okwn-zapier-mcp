@@ -124,3 +124,6 @@ This repo also hosts official Zapier plugins for AI workflows. Each plugin is a 
 
 ## Contributing
 PRs welcome!
+
+<!-- Contributor: Arvuno - documentation update -->
+
